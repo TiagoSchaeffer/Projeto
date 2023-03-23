@@ -1,7 +1,10 @@
 package org.projeto.dell;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -147,7 +150,7 @@ public class Programa {
      * @param cidades Lista com as cidades.
      * @param itens   Lista dos itens.
      */
-    public void cadastrarTransporte(List<String> cidades, List<Integer> itens) {
+    public void cadastrarTransporte(@NotNull List<String> cidades, @NotNull List<Integer> itens) {
         int pesoTotal = 0;
         pesoTotal += itens.get(0)*CELULAR;
         pesoTotal += itens.get(1)*GELADEIRA;
@@ -167,19 +170,13 @@ public class Programa {
             if (i == 0)
                 cidadeAnterior = cidades.get(i);
             else {
-                System.out.println(i);
                 cidadeAtual = cidades.get(i);
 
-                double custoP = 0;
-                double custoM = 0;
-                double custoG = 0;
-                if (quantCaminhao.get(0) > 0)
-                    custoP = quantCaminhao.get(0) * consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,0).get(1);
-                if (quantCaminhao.get(1) > 0)
-                    custoM = quantCaminhao.get(1) * consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,1).get(1);
-                if (quantCaminhao.get(2) > 0)
-                    custoG = quantCaminhao.get(2) * consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,2).get(1);
-                double custoTrecho = custoP + custoM + custoG;
+                List<Double> custoC = calcCustoPCaminhao(quantCaminhao,cidadeAnterior,cidadeAtual);
+                double custoP = custoC.get(0);
+                double custoM = custoC.get(1);
+                double custoG = custoC.get(2);
+                double custoTrecho = custoC.get(0) + custoC.get(1) + custoC.get(2);
 
                 double distancia = consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,1).get(0);
                 distanciaTotal += distancia;
@@ -194,6 +191,19 @@ public class Programa {
 
         Transporte cadastro = new Transporte(itens, pesoTotal, quantCaminhao, listaTrechos, distanciaTotal, custoTotal);
         cadastrosTransportes.add(cadastro);
+    }
+
+    public List<Double> calcCustoPCaminhao(@NotNull List<Integer> quantCaminhao, String cidadeI, String cidadeF) {
+        double custoP = 0;
+        double custoM = 0;
+        double custoG = 0;
+        if (quantCaminhao.get(0) > 0)
+            custoP = quantCaminhao.get(0) * consultarTrechosxModalidade(cidadeI,cidadeF,0).get(1);
+        if (quantCaminhao.get(1) > 0)
+            custoM = quantCaminhao.get(1) * consultarTrechosxModalidade(cidadeI,cidadeF,1).get(1);
+        if (quantCaminhao.get(2) > 0)
+            custoG = quantCaminhao.get(2) * consultarTrechosxModalidade(cidadeI,cidadeF,2).get(1);
+        return new ArrayList<>(Arrays.asList(custoP,custoM,custoG));
     }
 
     /**
@@ -226,6 +236,30 @@ public class Programa {
         quantCaminhao.add(quantMedio);
         quantCaminhao.add(quantGrande);
         return quantCaminhao;
+    }
+
+    /**
+     *  Método para calcular a melhor quantidade de caminhão de cada tipo,
+     *  para gastar menos.
+     *
+     * @param t recebe um Transporte.
+     * @return Retorna uma lista com os dados estatísticos pedidos, sendo .
+     */
+    public List<Double> dadosEstatisticos(@NotNull Transporte t) {
+        double custoMKm = t.custoTotal/ t.distanciaTotal;
+
+        int quantTipo = 0;
+        for (int i = 0; i < t.getItens().size(); i++) {
+            if (t.getItens().get(i) > 0)
+                quantTipo ++;
+        }
+        double custoMTipo = t.custoTotal/quantTipo;
+
+        double totalItens = 0;
+        for(int i = 0; i < t.getItens().size(); i++)
+            totalItens += t.getItens().get(i);
+
+        return new ArrayList<>(Arrays.asList(custoMKm,custoMTipo,totalItens));
     }
 
 }

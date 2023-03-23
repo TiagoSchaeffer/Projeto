@@ -1,6 +1,5 @@
 package org.projeto.dell;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -120,5 +119,15 @@ public class ProgramaTest {
         assertEquals(programa.cadastrosTransportes.get(0).getTrechos().get(1).getCidadeI(),cadastroEsperado.get(0).getTrechos().get(1).getCidadeI());
     }
 
+    /**
+     * Teste do método dadosEstatisticos.
+     */
+    @Test
+    void testeDados() {
+        List<Double> dadosEsperados = new ArrayList<>(Arrays.asList(28.71, 26861.076, 250.0));
+        programa.cadastrarTransporte(new ArrayList<>(Arrays.asList("BELEM","BELO HORIZONTE", "MACEIO")),new ArrayList<>(Arrays.asList(100,100,20,10,20,0)));
+        List<Double> dadosRetornados = programa.dadosEstatisticos(programa.cadastrosTransportes.get(0));
+        assertEquals(dadosRetornados,dadosEsperados);
+    }
 
 }
