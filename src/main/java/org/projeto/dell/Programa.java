@@ -11,19 +11,44 @@ import java.util.List;
  * @author Tiago M. Schaeffer S.
  */
 public class Programa {
+
     /**
      *  Váriavel estática com o preço do caminhão pequeno
      */
-    static double CAMINHAO_PEQUENO = 4.87;
+    private static double CAMINHAO_PEQUENO = 4.87;
     /**
      *  Váriavel estática com o preço do caminhão médio
      */
-    static double CAMINHAO_MEDIO = 11.92;
+    private static double CAMINHAO_MEDIO = 11.92;
 
     /**
      *  Váriavel estática com o preço do caminhão grande
      */
-    static double CAMINHAO_GRANDE = 27.44;
+    private static double CAMINHAO_GRANDE = 27.44;
+    /**
+     * Variável estática com o peso do celular.
+     */
+    private static double CELULAR = 0.5;
+    /**
+     * Variável estática com o peso da geladeira.
+     */
+    private static double GELADEIRA = 60;
+    /**
+     * Variável estática com o peso do freezer.
+     */
+    private static double FREEZER = 100;
+    /**
+     * Variável estática com o peso da cadeira.
+     */
+    private static double CADEIRA = 5;
+    /**
+     * Variável estática com o peso do luminaria.
+     */
+    private static double LUMINARIA = 0.8;
+    /**
+     * Variável estática com o peso do lavadora.
+     */
+    private static double LAVADORA = 120;
 
 
     public void printLista() {
@@ -112,5 +137,24 @@ public class Programa {
         return list;
     }
 
+    public void cadastrarTransporte(List<String> cidades, List<Integer> itens) {
+        int pesoTotal = 0;
+        pesoTotal += itens.get(0)*CELULAR;
+        pesoTotal += itens.get(1)*GELADEIRA;
+        pesoTotal += itens.get(2)*FREEZER;
+        pesoTotal += itens.get(3)*CADEIRA;
+        pesoTotal += itens.get(4)*LUMINARIA;
+        pesoTotal += itens.get(5)*LAVADORA;
+
+        String cidadeAtual;
+        String cidadeAnterior;
+        for (int i = 0; i < cidades.size(); i++) {
+            if (i == 0)
+                cidadeAnterior = cidades.get(i);
+            else {
+                cidadeAtual = cidades.get(i);
+            }
+        }
+    }
 
 }
