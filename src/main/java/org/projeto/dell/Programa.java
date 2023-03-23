@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Classe que realiza as funcionalidades do programa da DELL
+ * Classe que realiza as funcionalidades do programa da DELL.
  *
  * @author Tiago M. Schaeffer S.
  */
@@ -15,41 +15,45 @@ public class Programa {
     /**
      *  Váriavel estática com o preço do caminhão pequeno
      */
-    private static double CAMINHAO_PEQUENO = 4.87;
+    private static final double CAMINHAO_PEQUENO = 4.87;
     /**
      *  Váriavel estática com o preço do caminhão médio
      */
-    private static double CAMINHAO_MEDIO = 11.92;
+    private static final double CAMINHAO_MEDIO = 11.92;
 
     /**
      *  Váriavel estática com o preço do caminhão grande
      */
-    private static double CAMINHAO_GRANDE = 27.44;
+    private static final double CAMINHAO_GRANDE = 27.44;
     /**
      * Variável estática com o peso do celular.
      */
-    private static double CELULAR = 0.5;
+    private static final double CELULAR = 0.5;
     /**
      * Variável estática com o peso da geladeira.
      */
-    private static double GELADEIRA = 60;
+    private static final double GELADEIRA = 60;
     /**
      * Variável estática com o peso do freezer.
      */
-    private static double FREEZER = 100;
+    private static final double FREEZER = 100;
     /**
      * Variável estática com o peso da cadeira.
      */
-    private static double CADEIRA = 5;
+    private static final double CADEIRA = 5;
     /**
      * Variável estática com o peso do luminaria.
      */
-    private static double LUMINARIA = 0.8;
+    private static final double LUMINARIA = 0.8;
     /**
      * Variável estática com o peso do lavadora.
      */
-    private static double LAVADORA = 120;
+    private static final double LAVADORA = 120;
 
+    /**
+     * Atributo com todos os cadastros feitos.
+     */
+    List<Transporte> cadastrosTransportes = new ArrayList<>();
 
     public void printLista() {
         List<List<String>> lista = criarMatrix();
@@ -137,6 +141,12 @@ public class Programa {
         return list;
     }
 
+    /**
+     *  Método para cadastrar o transporte na lista do programa.
+     *
+     * @param cidades Lista com as cidades.
+     * @param itens   Lista dos itens.
+     */
     public void cadastrarTransporte(List<String> cidades, List<Integer> itens) {
         int pesoTotal = 0;
         pesoTotal += itens.get(0)*CELULAR;
@@ -146,15 +156,74 @@ public class Programa {
         pesoTotal += itens.get(4)*LUMINARIA;
         pesoTotal += itens.get(5)*LAVADORA;
 
+        List<Integer> quantCaminhao = calQuantCaminhao(pesoTotal);
+
+        List<Trecho> listaTrechos = new ArrayList<>();
+        String cidadeAnterior = "";
         String cidadeAtual;
-        String cidadeAnterior;
+        double distanciaTotal = 0;
         for (int i = 0; i < cidades.size(); i++) {
             if (i == 0)
                 cidadeAnterior = cidades.get(i);
             else {
+                System.out.println(i);
                 cidadeAtual = cidades.get(i);
+
+                double custoP = 0;
+                double custoM = 0;
+                double custoG = 0;
+                if (quantCaminhao.get(0) > 0)
+                    custoP = quantCaminhao.get(0) * consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,0).get(1);
+                if (quantCaminhao.get(1) > 0)
+                    custoM = quantCaminhao.get(1) * consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,1).get(1);
+                if (quantCaminhao.get(2) > 0)
+                    custoG = quantCaminhao.get(2) * consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,2).get(1);
+                double custoTrecho = custoP + custoM + custoG;
+
+                double distancia = consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,1).get(0);
+                distanciaTotal += distancia;
+
+                Trecho trechoAtual = new Trecho(cidadeAnterior, cidadeAtual, distancia, custoTrecho);
+                listaTrechos.add(trechoAtual);
+
+                cidadeAnterior = cidadeAtual;
             }
         }
+
+        Transporte cadastro = new Transporte(itens, pesoTotal, quantCaminhao, listaTrechos, distanciaTotal);
+        cadastrosTransportes.add(cadastro);
+    }
+
+    /**
+     *  Método para calcular a melhor quantidade de caminhão de cada tipo,
+     *  para gastar menos.
+     *
+     * @param pesoTotal peso total dos produtos.
+     * @return Retorna uma lista com as quantidades de cada caminhão.
+     */
+    public List<Integer> calQuantCaminhao(double pesoTotal) {
+        List<Integer> quantCaminhao = new ArrayList<>();
+        int quantPequeno = 0;
+        int quantMedio = 0;
+        int quantGrande = 0;
+        while (pesoTotal > 0) {
+            if (pesoTotal > 10000) {
+                quantGrande += 1;
+                pesoTotal -= 10000;
+            }
+            else if (pesoTotal > 4000) {
+                quantMedio += 1;
+                pesoTotal -= 4000;
+            }
+            else {
+                quantPequeno += 1;
+                pesoTotal -= 1000;
+            }
+        }
+        quantCaminhao.add(quantPequeno);
+        quantCaminhao.add(quantMedio);
+        quantCaminhao.add(quantGrande);
+        return quantCaminhao;
     }
 
 }

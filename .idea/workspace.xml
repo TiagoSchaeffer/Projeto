@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="27d4942c-c76d-444a-836b-e2e190032cfb" name="Changes" comment="Consulta custo e distância">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Transporte.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Trecho.java" afterDir="false" />
+    <list default="true" id="27d4942c-c76d-444a-836b-e2e190032cfb" name="Changes" comment="Cadastro transporte e calculo de caminhão">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Programa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Programa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Transporte.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Transporte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/projeto/dell/ProgramaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/projeto/dell/ProgramaTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,30 +39,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/tiago/IdeaProjects/ProjetoDell",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tiago/IdeaProjects/ProjetoDell&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tiago\IdeaProjects\ProjetoDell\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ProgramaTest">
+  <component name="RunManager" selected="Gradle.ProgramaTest.testeCadastro">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.projeto.dell.Main" />
       <module name="ProjetoDell.main" />
@@ -99,9 +99,57 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="ProgramaTest.testeCadastro" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.projeto.dell.ProgramaTest.testeCadastro&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProgramaTest.testeCalQuantCaminhao" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.projeto.dell.ProgramaTest.testeCalQuantCaminhao&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ProgramaTest.testeCadastro" />
         <item itemvalue="Gradle.ProgramaTest" />
+        <item itemvalue="Gradle.ProgramaTest.testeCalQuantCaminhao" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -115,7 +163,8 @@
       <option name="presentableId" value="Default" />
       <updated>1679532950098</updated>
       <workItem from="1679532951227" duration="906000" />
-      <workItem from="1679533923896" duration="14095000" />
+      <workItem from="1679533923896" duration="14204000" />
+      <workItem from="1679578856543" duration="11322000" />
     </task>
     <task id="LOCAL-00001" summary="Busca index da cidade">
       <created>1679534820886</created>
@@ -131,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679540492317</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Cria classe Transporte e Trecho">
+      <created>1679548126737</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679548126737</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +207,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Busca index da cidade" />
     <MESSAGE value="Consulta custo e distância" />
-    <option name="LAST_COMMIT_MESSAGE" value="Consulta custo e distância" />
+    <MESSAGE value="Cria classe Transporte e Trecho" />
+    <MESSAGE value="Cadastro transporte e calculo de caminhão" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cadastro transporte e calculo de caminhão" />
   </component>
 </project>

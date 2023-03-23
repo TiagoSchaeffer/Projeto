@@ -10,10 +10,6 @@ import java.util.*;
 public class Transporte {
 
     /**
-     * Atributo com a lista dos nomes das cidades.
-     */
-    public List<String> cidades;
-    /**
      * Atributo com a lista das quantidades de cada item.
      */
     public List<Integer> itens;
@@ -22,43 +18,35 @@ public class Transporte {
      */
     public double pesoTotal;
     /**
-     * Atributo com a quantidade de caminhões necessárias para o transporte.
+     * Atributo com a lista quantidade de caminhões por tipo.
      */
-    public int quantCaminhao;
+    public List<Integer> quantCaminhao;
+    /**
+     * Atributo com a lista de trechos do transporte.
+     */
+    public List<Trecho> trechos;
+    /**
+     * Atributo com a distância Total.
+     */
+    public double distanciaTotal;
 
 
     /**
      * Construtor da classe Transporte.
      *
-     * @param cidades       Lista nome das cidades.
      * @param itens         Lista quantidade itens.
      * @param pesoTotal     double peso total dos itens.
      * @param quantCaminhao int quantidade de caminhão.
+     * @param trechos       Lista de trechos.
      */
-    public Transporte(List<String> cidades, List<Integer> itens, double pesoTotal, int quantCaminhao) {
-        this.cidades = cidades;
+    public Transporte(List<Integer> itens, double pesoTotal, List<Integer> quantCaminhao, List<Trecho> trechos, double distanciaTotal) {
         this.itens = itens;
         this.pesoTotal = pesoTotal;
         this.quantCaminhao = quantCaminhao;
+        this.trechos = trechos;
+        this.distanciaTotal = distanciaTotal;
     }
 
-    /**
-     * get da lista de cidades.
-     *
-     * @return Retorna a lista com as cidades.
-     */
-    public List<String> getCidades() {
-        return cidades;
-    }
-
-    /**
-     * set da lista de cidades.
-     *
-     * @param cidades Lista com os nomes das cidade.
-     */
-    public void setCidades(List<String> cidades) {
-        this.cidades = cidades;
-    }
 
     /**
      * get da lista de itens.
@@ -81,18 +69,18 @@ public class Transporte {
     /**
      * get da quantidade de caminhão.
      *
-     * @return Retorna int da quantidade de caminhão.
+     * @return Retorna List<Integer> da quantidade de caminhão.
      */
-    public int getQuantCaminhao() {
+    public List<Integer> getQuantCaminhao() {
         return quantCaminhao;
     }
 
     /**
-     * set da lista de itens.
+     * set da lista de caminhões.
      *
-     * @param quantCaminhao quantidade de caminhão.
+     * @param quantCaminhao quantidade de caminhão por tipo.
      */
-    public void setQuantCaminhao(int quantCaminhao) {
+    public void setQuantCaminhao(List<Integer> quantCaminhao) {
         this.quantCaminhao = quantCaminhao;
     }
 
@@ -105,7 +93,48 @@ public class Transporte {
         return pesoTotal;
     }
 
+    /**
+     * set do peso total dos itens.
+     *
+     * @param pesoTotal double do peso total dos itens.
+     */
     public void setPesoTotal(double pesoTotal) {
         this.pesoTotal = pesoTotal;
+    }
+
+    /**
+     * get da lista de trechos.
+     *
+     * @return Retorna List<Trecho> com todos os trechos do transporte.
+     */
+    public List<Trecho> getTrechos() {
+        return trechos;
+    }
+
+    /**
+     * set da lista de trechos.
+     *
+     * @param trechos Lista com todos os trechos do transporte.
+     */
+    public void setTrechos(List<Trecho> trechos) {
+        this.trechos = trechos;
+    }
+
+    /**
+     * get da distância total de todos os trechos.
+     *
+     * @return Retorna a distânia total realizada pelo transporte.
+     */
+    public double getDistanciaTotal() {
+        return distanciaTotal;
+    }
+
+    /**
+     * get da distância total de todos os trechos.
+     *
+     * @param distanciaTotal double com a distânia total realizada pelo transporte.
+     */
+    public void setDistanciaTotal(double distanciaTotal) {
+        this.distanciaTotal = distanciaTotal;
     }
 }
