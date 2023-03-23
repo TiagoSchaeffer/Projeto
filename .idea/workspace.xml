@@ -62,20 +62,7 @@
       <recent name="C:\Users\tiago\IdeaProjects\ProjetoDell\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ProgramaTest.testeCadastro">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.projeto.dell.Main" />
-      <module name="ProjetoDell.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.projeto.dell.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Gradle.ProgramaTest.testeCadastroDoisTrechos">
     <configuration name="ProgramaTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -122,6 +109,29 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="ProgramaTest.testeCadastroDoisTrechos" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.projeto.dell.ProgramaTest.testeCadastroDoisTrechos&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="ProgramaTest.testeCalQuantCaminhao" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -145,12 +155,36 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="ProgramaTest.testeConsulta" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.projeto.dell.ProgramaTest.testeConsulta&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ProgramaTest.testeCadastroDoisTrechos" />
+        <item itemvalue="Gradle.ProgramaTest.testeConsulta" />
         <item itemvalue="Gradle.ProgramaTest.testeCadastro" />
         <item itemvalue="Gradle.ProgramaTest" />
         <item itemvalue="Gradle.ProgramaTest.testeCalQuantCaminhao" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -164,7 +198,7 @@
       <updated>1679532950098</updated>
       <workItem from="1679532951227" duration="906000" />
       <workItem from="1679533923896" duration="14204000" />
-      <workItem from="1679578856543" duration="11322000" />
+      <workItem from="1679578856543" duration="12996000" />
     </task>
     <task id="LOCAL-00001" summary="Busca index da cidade">
       <created>1679534820886</created>
@@ -187,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679548126737</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Cadastro transporte e calculo de caminhão">
+      <created>1679593784650</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679593784650</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

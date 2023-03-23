@@ -26,9 +26,13 @@ public class Transporte {
      */
     public List<Trecho> trechos;
     /**
-     * Atributo com a distância Total.
+     * Atributo com a distância total.
      */
     public double distanciaTotal;
+    /**
+     * Atributo com o custo total.
+     */
+    public double custoTotal;
 
 
     /**
@@ -39,12 +43,13 @@ public class Transporte {
      * @param quantCaminhao int quantidade de caminhão.
      * @param trechos       Lista de trechos.
      */
-    public Transporte(List<Integer> itens, double pesoTotal, List<Integer> quantCaminhao, List<Trecho> trechos, double distanciaTotal) {
+    public Transporte(List<Integer> itens, double pesoTotal, List<Integer> quantCaminhao, List<Trecho> trechos, double distanciaTotal, double custoTotal) {
         this.itens = itens;
         this.pesoTotal = pesoTotal;
         this.quantCaminhao = quantCaminhao;
         this.trechos = trechos;
         this.distanciaTotal = distanciaTotal;
+        this.custoTotal = custoTotal;
     }
 
 
@@ -121,7 +126,7 @@ public class Transporte {
     }
 
     /**
-     * get da distância total de todos os trechos.
+     * get da distância total do transporte.
      *
      * @return Retorna a distânia total realizada pelo transporte.
      */
@@ -130,11 +135,30 @@ public class Transporte {
     }
 
     /**
-     * get da distância total de todos os trechos.
+     * set da distância total do transporte.
      *
      * @param distanciaTotal double com a distânia total realizada pelo transporte.
      */
     public void setDistanciaTotal(double distanciaTotal) {
         this.distanciaTotal = distanciaTotal;
     }
+
+    /**
+     * get do custo total do transporte.
+     *
+     * @return Retorna o custo total do transporte.
+     */
+    public double getCustoTotal() {
+        return custoTotal;
+    }
+
+    /**
+     * set do custo total do transporte.
+     *
+     * @param custoTotal double com o custo total do transporte.
+     */
+    public void setCustoTotal(double custoTotal) {
+        this.custoTotal = custoTotal;
+    }
+
 }

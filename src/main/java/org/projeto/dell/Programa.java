@@ -161,6 +161,7 @@ public class Programa {
         List<Trecho> listaTrechos = new ArrayList<>();
         String cidadeAnterior = "";
         String cidadeAtual;
+        double custoTotal = 0;
         double distanciaTotal = 0;
         for (int i = 0; i < cidades.size(); i++) {
             if (i == 0)
@@ -182,6 +183,7 @@ public class Programa {
 
                 double distancia = consultarTrechosxModalidade(cidadeAnterior,cidadeAtual,1).get(0);
                 distanciaTotal += distancia;
+                custoTotal += custoTrecho;
 
                 Trecho trechoAtual = new Trecho(cidadeAnterior, cidadeAtual, distancia, custoTrecho);
                 listaTrechos.add(trechoAtual);
@@ -190,7 +192,7 @@ public class Programa {
             }
         }
 
-        Transporte cadastro = new Transporte(itens, pesoTotal, quantCaminhao, listaTrechos, distanciaTotal);
+        Transporte cadastro = new Transporte(itens, pesoTotal, quantCaminhao, listaTrechos, distanciaTotal, custoTotal);
         cadastrosTransportes.add(cadastro);
     }
 
