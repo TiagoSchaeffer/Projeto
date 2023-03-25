@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="27d4942c-c76d-444a-836b-e2e190032cfb" name="Changes" comment="Concerto Interface consultar e começo cadastrar transporte">
+    <list default="true" id="27d4942c-c76d-444a-836b-e2e190032cfb" name="Changes" comment="Interface terminada">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/IntefaceG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/IntefaceG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Programa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Programa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Transporte.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Transporte.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/projeto/dell/ProgramaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/projeto/dell/ProgramaTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,31 +58,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tiago/IdeaProjects/ProjetoDell&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/tiago/IdeaProjects/ProjetoDell",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tiago\IdeaProjects\ProjetoDell\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ProgramaTest.testeCadastro">
+  <component name="RunManager" selected="Gradle.ProgramaTest">
     <configuration name="IntefaceG" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.projeto.dell.IntefaceG" />
       <module name="ProjetoDell.main" />
@@ -187,10 +191,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ProgramaTest" />
+        <item itemvalue="Gradle.ProgramaTest.testeCadastroDoisTrechos" />
         <item itemvalue="Gradle.ProgramaTest.testeCadastro" />
         <item itemvalue="Gradle.ProgramaTest.testeDados" />
-        <item itemvalue="Gradle.ProgramaTest.testeCadastroDoisTrechos" />
-        <item itemvalue="Gradle.ProgramaTest" />
         <item itemvalue="Application.IntefaceG" />
       </list>
     </recent_temporary>
@@ -207,7 +211,9 @@
       <workItem from="1679533923896" duration="14204000" />
       <workItem from="1679578856543" duration="20279000" />
       <workItem from="1679602565005" duration="27159000" />
-      <workItem from="1679672286035" duration="30360000" />
+      <workItem from="1679672286035" duration="46048000" />
+      <workItem from="1679722121560" duration="195000" />
+      <workItem from="1679765052969" duration="9596000" />
     </task>
     <task id="LOCAL-00001" summary="Busca index da cidade">
       <created>1679534820886</created>
@@ -265,7 +271,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679631856218</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Arrumado calculo veiculo, cadastro na interface">
+      <created>1679707317004</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1679707317004</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Interface terminada">
+      <created>1679722279362</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1679722279362</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -291,6 +311,11 @@
     <MESSAGE value="Calculo dados estatísticos" />
     <MESSAGE value="criado interface consultar" />
     <MESSAGE value="Concerto Interface consultar e começo cadastrar transporte" />
-    <option name="LAST_COMMIT_MESSAGE" value="Concerto Interface consultar e começo cadastrar transporte" />
+    <MESSAGE value="Arrumado calculo veiculo, cadastro na interface" />
+    <MESSAGE value="Interface terminada" />
+    <option name="LAST_COMMIT_MESSAGE" value="Interface terminada" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ProjetoDell$ProgramaTest.ic" NAME="ProgramaTest Coverage Results" MODIFIED="1679768161343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -40,14 +40,14 @@ public class Programa {
      * @return Retorna uma matrix de String, feita com List Collection.
      */
     public List<List<String>> criarMatrix() {
-        String path = "src\\main\\resources\\DNIT-Distancias.csv";
+        String caminho = "src\\main\\resources\\DNIT-Distancias.csv";
         List<List<String>> lista = new ArrayList<>();
-        String line;
-        try (BufferedReader dataxls = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader dataxls = new BufferedReader(new FileReader(caminho))) {
+            String line;
             while ((line = dataxls.readLine()) != null) {
                 List<String> linha = new ArrayList<>();
-                String[] line_split = line.split(";");
-                Collections.addAll(linha, line_split);
+                String[] listaLinha = line.split(";");
+                Collections.addAll(linha, listaLinha);
                 lista.add(linha);
             }
             return lista;
@@ -84,20 +84,16 @@ public class Programa {
         List<List<String>> lista = criarMatrix();
         int indexI = buscarIndexCidade(cidadeI);
         int indexF = buscarIndexCidade(cidadeF);
-        int distancia = Integer.parseInt(lista.get(indexI + 1).get(indexF));
+        double distancia = Integer.parseInt(lista.get(indexI + 1).get(indexF));
         double custo = 0.0;
-        if (modalidade == 0)
+        if (modalidade == 0) {
             custo = CAMINHAO_PEQUENO * distancia;
-        else if (modalidade == 1)
+        } else if (modalidade == 1) {
             custo = CAMINHAO_MEDIO * distancia;
-        else if (modalidade == 2)
+        } else if (modalidade == 2) {
             custo = CAMINHAO_GRANDE * distancia;
-        Double distanciaD = (Double) (double) distancia;
-        Double custoD = custo;
-        List<Double> list = new ArrayList<>();
-        list.add(distanciaD);
-        list.add(custoD);
-        return list;
+        }
+        return new ArrayList<>(Arrays.asList(distancia,custo));
     }
 
     /**
@@ -113,44 +109,54 @@ public class Programa {
             double pesoItem = Double.parseDouble(item.get(2));
             pesoTotal += quantItem * pesoItem;
         }
-
         List<Integer> quantCaminhao = calQuantCaminhao(pesoTotal);
         List<Trecho> listaTrechos = new ArrayList<>();
-        double custoTotalCPequeno = 0;
-        double custoTotalCGrande = 0;
-        double custoTotalCMedio = 0;
         String cidadeAnterior = "";
         String cidadeAtual;
-        double custoTotal = 0;
         double distanciaTotal = 0;
+        List<Double> custos = new ArrayList<>(Arrays.asList(0.0,0.0,0.0,0.0));
         for (int i = 0; i < cidades.size(); i++) {
-            if (i == 0)
+            if (i == 0) {
                 cidadeAnterior = cidades.get(i);
-            else {
+            } else {
                 cidadeAtual = cidades.get(i);
-
-                List<Double> custoC = calcCustoPCaminhao(quantCaminhao, cidadeAnterior, cidadeAtual);
-                double custoTrecho = custoC.get(0) + custoC.get(1) + custoC.get(2);
-                custoTotalCPequeno += custoC.get(0);
-                custoTotalCMedio += custoC.get(1);
-                custoTotalCGrande += custoC.get(2);
-
                 double distancia = consultarTrechosxModalidade(cidadeAnterior, cidadeAtual, 1).get(0);
                 distanciaTotal += distancia;
-                custoTotal += custoTrecho;
-
-                Trecho trechoAtual = new Trecho(cidadeAnterior, cidadeAtual, distancia, custoTrecho);
-                listaTrechos.add(trechoAtual);
-
+                custos = calcularCustos(custos, cidadeAnterior, cidadeAtual, pesoTotal);
+                listaTrechos.add(new Trecho(cidadeAnterior, cidadeAtual, distancia, custos.get(3)));
                 cidadeAnterior = cidadeAtual;
             }
         }
-
-        Transporte cadastro = new Transporte(itens, pesoTotal, quantCaminhao, listaTrechos, distanciaTotal, custoTotal, new ArrayList<>(Arrays.asList(custoTotalCPequeno,custoTotalCMedio,custoTotalCGrande)));
-        cadastrosTransportes.add(cadastro);
+        double custoTotal = custos.get(0) + custos.get(1) + custos.get(2);
+        cadastrosTransportes.add(new Transporte(itens, pesoTotal, quantCaminhao, listaTrechos, distanciaTotal, custoTotal, new ArrayList<>(Arrays.asList(custos.get(0), custos.get(1), custos.get(2)))));
     }
 
-    public List<Double> calcCustoPCaminhao(@NotNull List<Integer> quantCaminhao, String cidadeI, String cidadeF) {
+    /**
+     * Método para calcular os custo total de cada caminhão, e o trecho.
+     *
+     * @param custos    Lista com as cidades.
+     * @param cidadeI   Cidade inicial.
+     * @param cidadeF    Lista final.
+     * @param pesoTotal  peso total do transporte.
+     * @return Lista de double com as posições sendo [0]-Custo do caminhão pequeno, [1]- Custo do caminhão médio,
+     * [2]- Custo do caminhão grande e [3] custo total do trecho.
+     */
+    private List<Double> calcularCustos(@NotNull List<Double> custos, String cidadeI, String cidadeF, double pesoTotal) {
+        List<Integer> quantCaminhao = calQuantCaminhao(pesoTotal);
+        List<Double> custoC = custoTipoCaminhao(quantCaminhao, cidadeI, cidadeF);
+        double custoTrecho = custoC.get(0) + custoC.get(1) + custoC.get(2);
+        return new ArrayList<>(Arrays.asList(custos.get(0) + custoC.get(0), custos.get(1) + custoC.get(1), custos.get(2) + custoC.get(2), custoTrecho));
+    }
+
+    /**
+     * Método para calcular o custo por tipo de caminhão de um trecho.
+     *
+     * @param quantCaminhao Lista com as quantidades por caminhão.
+     * @param cidadeI       Cidade inicial.
+     * @param cidadeF       Cidade de destino.
+     * @return Retorna uma lista com o custo por tipo de caminhão.
+     */
+    public List<Double> custoTipoCaminhao(@NotNull List<Integer> quantCaminhao, String cidadeI, String cidadeF) {
         double custoP = 0;
         double custoM = 0;
         double custoG = 0;
@@ -171,7 +177,6 @@ public class Programa {
      * @return Retorna uma lista com as quantidades de cada caminhão.
      */
     public List<Integer> calQuantCaminhao(double pesoTotal) {
-        List<Integer> quantCaminhao = new ArrayList<>();
         int quantPequeno = 0;
         int quantMedio = 0;
         int quantGrande = 0;
@@ -187,22 +192,17 @@ public class Programa {
                 pesoTotal -= 1000;
             }
         }
-        quantCaminhao.add(quantPequeno);
-        quantCaminhao.add(quantMedio);
-        quantCaminhao.add(quantGrande);
-        return quantCaminhao;
+        return new ArrayList<>(Arrays.asList(quantPequeno,quantMedio,quantGrande));
     }
 
     /**
-     * Método para calcular a melhor quantidade de caminhão de cada tipo,
-     * para gastar menos.
+     * Método para calcular dados estatisticos e quantidade total de itens.
      *
      * @param t recebe um Transporte.
      * @return Retorna uma lista com os dados estatísticos pedidos, sendo 0 - custo médio por km, 1- custo médio por tipo, 2- quantidade total de itens.
      */
     public List<Double> dadosEstatisticos(@NotNull Transporte t) {
         double custoMKm = t.custoTotal / t.distanciaTotal;
-
         int quantTipo = 0;
         double totalItens = 0;
         for (int i = 0; i < t.getItens().size(); i++) {
@@ -214,11 +214,17 @@ public class Programa {
         double custoMTipo = 0.0;
         if (quantTipo > 0)
             custoMTipo = t.custoTotal / quantTipo;
-
         return new ArrayList<>(Arrays.asList(custoMKm, custoMTipo, totalItens));
     }
 
-    public List<Double> custoMedioPTipo(List<Double> custoTotal, List<Integer> quant) {
+    /**
+     * Método para calcular o custo médio por tipo de item.
+     *
+     * @param custoTotal Custo total do trajeto.
+     * @param quant      Quantidade por tipo de caminhõa;
+     * @return Retorna uma lista com os dados estatísticos pedidos, sendo 0 - custo médio por km, 1- custo médio por tipo, 2- quantidade total de itens.
+     */
+    public List<Double> custoMedioPTipo(@NotNull List<Double> custoTotal, @NotNull List<Integer> quant) {
         double mediaPequeno = 0.0;
         double mediaMedio = 0.0;
         double mediaGrande = 0.0;

@@ -2,8 +2,6 @@ package org.projeto.dell;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +16,7 @@ import java.util.regex.Pattern;
 public class IntefaceG {
     private JFrame frame;
     static ImageIcon iconDisplay = new ImageIcon();
-    private Programa programa = new Programa();
+    private final Programa programa = new Programa();
 
     private JTextField textComeco;
     private JTextField textDestino;
@@ -86,47 +84,41 @@ public class IntefaceG {
 
         JButton confirmConsultar = new JButton("Confirmar");
         confirmConsultar.setBounds(108, 300, 150, 30);
-        confirmConsultar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String cidadeC = removerAcento(textComeco.getText());
-                String cidadeD = removerAcento(textDestino.getText());
-                if (!cidadeC.equalsIgnoreCase(cidadeD)) {
-                    if (programa.buscarIndexCidade(cidadeC) >= 0 && programa.buscarIndexCidade(cidadeD) >= 0) {
-                        List<Double> results = programa.consultarTrechosxModalidade(cidadeC, cidadeD, cbMod.getSelectedIndex());
-                        printTela("Distancia: " + results.get(0) + "\nCusto: " + results.get(1), "Resultado");
-                    } else
-                        printTela("ERRO: Uma ou mais cidades nao foram encontradas. ","ERRO");
+        confirmConsultar.addActionListener(e -> {
+            String cidadeC = removerAcento(textComeco.getText());
+            String cidadeD = removerAcento(textDestino.getText());
+            if (!cidadeC.equalsIgnoreCase(cidadeD)) {
+                if (programa.buscarIndexCidade(cidadeC) >= 0 && programa.buscarIndexCidade(cidadeD) >= 0) {
+                    List<Double> results = programa.consultarTrechosxModalidade(cidadeC, cidadeD, cbMod.getSelectedIndex());
+                    printTela("Distancia: " + results.get(0) + "\nCusto: " + results.get(1), "Resultado");
                 } else
-                    printTela("ERRO: Cidades iguais, por favor mudar.","ERRO");
-            }
+                    printTela("ERRO: Uma ou mais cidades nao foram encontradas. ","ERRO");
+            } else
+                printTela("ERRO: Cidades iguais, por favor mudar.","ERRO");
         });
 
         JButton buttonConsulta = new JButton("1- Consultar trechos");
         buttonConsulta.setBounds(10, 12, 200, 50);
         buttonConsulta.setBackground(Color.GRAY);
-        buttonConsulta.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Panel newPainel = new Panel();
-                newPainel.setBounds(221, 1, 400, 400);
+        buttonConsulta.addActionListener(e -> {
+            Panel newPainel = new Panel();
+            newPainel.setBounds(221, 1, 400, 400);
 
-                newPainel.setLayout(null);
-                newPainel.add(labelConsulta);
-                newPainel.add(labelCidade);
-                newPainel.add(labelComeco);
-                newPainel.add(labelDestino);
-                newPainel.add(labelModalidade);
-                newPainel.add(labelCaminhao);
+            newPainel.setLayout(null);
+            newPainel.add(labelConsulta);
+            newPainel.add(labelCidade);
+            newPainel.add(labelComeco);
+            newPainel.add(labelDestino);
+            newPainel.add(labelModalidade);
+            newPainel.add(labelCaminhao);
 
-                newPainel.add(textComeco);
-                newPainel.add(textDestino);
+            newPainel.add(textComeco);
+            newPainel.add(textDestino);
 
-                newPainel.add(confirmConsultar);
-                newPainel.add(cbMod);
-                frame.getContentPane().remove(1);
-                frame.getContentPane().add(newPainel);
-            }
+            newPainel.add(confirmConsultar);
+            newPainel.add(cbMod);
+            frame.getContentPane().remove(1);
+            frame.getContentPane().add(newPainel);
         });
 // --------------------------------------------Cadastrar Transporte----------------------------------------------------//
         JLabel labelCadastrar = new JLabel("Cadastrar Transporte");
@@ -161,120 +153,103 @@ public class IntefaceG {
 
         cidades = new ArrayList<>();
         JButton addCidade = new JButton("Adicionar");
-        addCidade.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nomeCidade = textCidade.getText();
-                if (programa.buscarIndexCidade(nomeCidade) >= 0) {
-                    if (cidades.size() > 0 && nomeCidade.equalsIgnoreCase(cidades.get(cidades.size() - 1)))
-                        printTela("ERRO: Cidade anterior e igual a que esta sendo adicionada.","ERRO");
-                    else
-                        cidades.add(nomeCidade);
-                } else
-                    printTela("ERRO: Cidade nao encontrada.","ERRO");
-                textCidade.setText("");
-            }
+        addCidade.addActionListener(e -> {
+            String nomeCidade = removerAcento(textCidade.getText());
+            if (programa.buscarIndexCidade(nomeCidade) >= 0) {
+                if (cidades.size() > 0 && nomeCidade.equalsIgnoreCase(cidades.get(cidades.size() - 1)))
+                    printTela("ERRO: Cidade anterior e igual a que esta sendo adicionada.","ERRO");
+                else
+                    cidades.add(nomeCidade);
+            } else
+                printTela("ERRO: Cidade nao encontrada.","ERRO");
+            textCidade.setText("");
         });
         addCidade.setBounds(250, 95, 100, 30);
 
         JButton confirmCadastro = new JButton("Confirmar");
         confirmCadastro.setBounds(108, 300, 150, 30);
-        confirmCadastro.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int erro = 0;
-                List<List<String>> listaItens = new ArrayList<>();
-                for (int i = 0; i < tabelaItens.getRowCount(); i++) {
-                    String nomeAtual = (String) tabelaItens.getValueAt(i, 0);
-                    String quantidadeAtual = (String) tabelaItens.getValueAt(i, 1);
-                    String pesoAtual = (String) tabelaItens.getValueAt(i, 2);
-                    if (!nomeAtual.equals("")) {
-                        if (!quantidadeAtual.equals("")) {
-                            try {
-                                int numero = Integer.parseInt(quantidadeAtual);
-                                if (numero < 0)
-                                    throw new Exception();
-                            } catch (Exception o) {
-                                erro += 1;
-                                printTela("ERRO: Na coluna quantidade e necessario colocar um numero cardinal.","ERRO");
-                            }
-                        } else {
+        confirmCadastro.addActionListener(e -> {
+            int erro = 0;
+            List<List<String>> listaItens = new ArrayList<>();
+            for (int i = 0; i < tabelaItens.getRowCount(); i++) {
+                String nomeAtual = removerAcento((String) tabelaItens.getValueAt(i, 0));
+                String quantidadeAtual = (String) tabelaItens.getValueAt(i, 1);
+                String pesoAtual = (String) tabelaItens.getValueAt(i, 2);
+                if (!nomeAtual.equals("")) {
+                    if (!quantidadeAtual.equals("")) {
+                        try {
+                            int numero = Integer.parseInt(quantidadeAtual);
+                            if (numero < 0)
+                                throw new Exception();
+                        } catch (Exception o) {
                             erro += 1;
-                            printTela("ERRO: Necessario colocar uma quantidade para o item, mesmo ser for 0.","ERRO");
+                            printTela("ERRO: Na coluna quantidade e necessario colocar um numero cardinal.","ERRO");
                         }
-
-                        if (!pesoAtual.equals("")) {
-                            try {
-                                double numero = Double.parseDouble(pesoAtual);
-                                if (numero <= 0.0)
-                                    throw new Exception();
-                            } catch (Exception o) {
-                                erro += 1;
-                                printTela("ERRO: Na coluna peso e necessario colocar um numero maior que 0.","ERRO");
-                            }
-                        } else {
-                            printTela("ERRO: Necessario colocar um peso para o item, mesmo ser for 0.1.","ERRO");
-                            erro += 1;
-                        }
-                        List<String> item = new ArrayList<>(Arrays.asList(nomeAtual, quantidadeAtual, pesoAtual));
-                        listaItens.add(item);
+                    } else {
+                        erro += 1;
+                        printTela("ERRO: Necessario colocar uma quantidade para o item, mesmo ser for 0.","ERRO");
                     }
-                }
 
-                if (erro == 0 && cidades.size() > 1) {
-                    programa.cadastrarTransporte(cidades, listaItens);
-                    cidades = new ArrayList<>();
-                    List<Transporte> cadastros = programa.cadastrosTransportes;
-                    printTela("Cadastro realizado com sucesso: Distancia total do transporte e de " + cadastros.get(cadastros.size()-1).getDistanciaTotal(), "Sucesso");
-                } else
-                    printTela("ERRO: Cidades insuficiente, por favor adicionar mais uma.","ERRO");
+                    if (!pesoAtual.equals("")) {
+                        try {
+                            double numero = Double.parseDouble(pesoAtual);
+                            if (numero <= 0.0)
+                                throw new Exception();
+                        } catch (Exception o) {
+                            erro += 1;
+                            printTela("ERRO: Na coluna peso e necessario colocar um numero maior que 0.","ERRO");
+                        }
+                    } else {
+                        printTela("ERRO: Necessario colocar um peso para o item, mesmo ser for 0.1.","ERRO");
+                        erro += 1;
+                    }
+                    List<String> item = new ArrayList<>(Arrays.asList(nomeAtual, quantidadeAtual, pesoAtual));
+                    listaItens.add(item);
+                }
             }
+
+            if (erro == 0 && cidades.size() > 1) {
+                programa.cadastrarTransporte(cidades, listaItens);
+                cidades = new ArrayList<>();
+                List<Transporte> cadastros = programa.cadastrosTransportes;
+                printTela("Cadastro realizado com sucesso: Distancia total do transporte e de " + cadastros.get(cadastros.size()-1).getDistanciaTotal(), "Sucesso");
+            } else
+                printTela("ERRO: Cidades insuficiente, por favor adicionar mais uma.","ERRO");
         });
 
         JButton buttonCadastro = new JButton("2- Cadastrar Transporte");
         buttonCadastro.setBounds(10, 77, 200, 50);
         buttonCadastro.setBackground(Color.GRAY);
-        buttonCadastro.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Panel newPainel = new Panel();
-                newPainel.setLayout(null);
-                newPainel.add(labelCadastrar);
-                newPainel.add(labelCidades);
-                newPainel.add(labelItens);
+        buttonCadastro.addActionListener(e -> {
+            Panel newPainel = new Panel();
+            newPainel.setLayout(null);
+            newPainel.add(labelCadastrar);
+            newPainel.add(labelCidades);
+            newPainel.add(labelItens);
 
-                newPainel.add(textCidade);
-                newPainel.add(tabelaScroll);
+            newPainel.add(textCidade);
+            newPainel.add(tabelaScroll);
 
-                newPainel.add(addCidade);
-                newPainel.add(confirmCadastro);
-                newPainel.setBounds(221, 1, 400, 400);
-                frame.getContentPane().remove(1);
-                frame.getContentPane().add(newPainel);
-            }
+            newPainel.add(addCidade);
+            newPainel.add(confirmCadastro);
+            newPainel.setBounds(221, 1, 400, 400);
+            frame.getContentPane().remove(1);
+            frame.getContentPane().add(newPainel);
         });
 // --------------------------------------------Dados estatisticos--------------------------------------------------//
         indexCadastro = 0;
         JButton buttonDados = new JButton("3- Dados estatisticos");
         buttonDados.setBounds(10, 142, 200, 50);
         buttonDados.setBackground(Color.GRAY);
-        buttonDados.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (programa.cadastrosTransportes.size() > 0) {
-                    criarPanelDados(indexCadastro);
-                }
+        buttonDados.addActionListener(e -> {
+            if (programa.cadastrosTransportes.size() > 0) {
+                criarPanelDados(indexCadastro);
             }
         });
 
         JButton buttonFechar = new JButton("4- Fechar");
         buttonFechar.setBackground(Color.GRAY);
-        buttonFechar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        buttonFechar.addActionListener(e -> System.exit(0));
         buttonFechar.setBounds(10, 305, 200, 40);
 
 
@@ -347,34 +322,25 @@ public class IntefaceG {
 
         JButton trechosButton = new JButton("Dados Trechos");
         trechosButton.setBounds(40,280, 300, 40);
-        trechosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<Trecho> trechos = t.getTrechos();
-                for (Trecho trecho : trechos) {
-                    printTela("O trecho de " + trecho.getCidadeI() + " ate " + trecho.getCidadeF() + " tem uma distancia de " + trecho.getDistancia() + ", e um custo de " + trecho.getCusto(), trecho.getCidadeI() + " - " + trecho.getCidadeF());
-                }
+        trechosButton.addActionListener(e -> {
+            List<Trecho> trechos = t.getTrechos();
+            for (Trecho trecho : trechos) {
+                printTela("O trecho de " + trecho.getCidadeI() + " ate " + trecho.getCidadeF() + " tem uma distancia de " + trecho.getDistancia() + ", e um custo de " + trecho.getCusto(), trecho.getCidadeI() + " - " + trecho.getCidadeF());
             }
         });
 
         JButton anteriorT = new JButton("Anterior");
         anteriorT.setBounds(10,13, 90, 40);
-        anteriorT.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                indexCadastro -= 1;
-                criarPanelDados(indexCadastro);
-            }
+        anteriorT.addActionListener(e -> {
+            indexCadastro -= 1;
+            criarPanelDados(indexCadastro);
         });
 
         JButton proximoT = new JButton("Proximo");
         proximoT.setBounds(265,13, 90, 40);
-        proximoT.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                indexCadastro += 1;
-                criarPanelDados(indexCadastro);
-            }
+        proximoT.addActionListener(e -> {
+            indexCadastro += 1;
+            criarPanelDados(indexCadastro);
         });
 
         Panel newPainel = new Panel();

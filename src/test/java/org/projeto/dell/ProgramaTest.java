@@ -80,7 +80,7 @@ public class ProgramaTest {
                 listItens,
                 8116,
                 new ArrayList<>(Arrays.asList(0,0,1)),
-                new ArrayList<>(Arrays.asList(new Trecho("BELEM","BELO HORIZONTE",2824,77490.56))),
+                new ArrayList<>(List.of(new Trecho("BELEM", "BELO HORIZONTE", 2824, 77490.56))),
                 2824,
                 81077.04000000001,
                 new ArrayList<>(Arrays.asList(0.0,0.0,81077.04000000001))
@@ -115,8 +115,8 @@ public class ProgramaTest {
                 8116,
                 new ArrayList<>(Arrays.asList(0,0,1)),
                 new ArrayList<>(Arrays.asList(
-                        new Trecho("BELEM","BELO HORIZONTE",2824,81077.04000000001),
-                        new Trecho("BELO HORIZONTE", "MACEIO", 1854, 53228.34)
+                        new Trecho("BELEM","BELO HORIZONTE",2824,77490.56),
+                        new Trecho("BELO HORIZONTE", "MACEIO", 1854, 50873.76)
                 )),
                 4678,
                 134305.38000000001,
@@ -151,7 +151,7 @@ public class ProgramaTest {
                 Arrays.asList("Luminaria","20", "0.8"),
                 Arrays.asList("Lavadora","0", "120.0")
         ));
-        List<Double> dadosEsperados = new ArrayList<>(Arrays.asList(28.71, 26861.076, 250.0));
+        List<Double> dadosEsperados = new ArrayList<>(Arrays.asList(27.44, 25672.864, 250.0));
         programa.cadastrarTransporte(new ArrayList<>(Arrays.asList("BELEM","BELO HORIZONTE", "MACEIO")),listItens);
         List<Double> dadosRetornados = programa.dadosEstatisticos(programa.cadastrosTransportes.get(0));
         assertEquals(dadosRetornados,dadosEsperados);
