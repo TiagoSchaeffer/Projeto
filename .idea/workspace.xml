@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="27d4942c-c76d-444a-836b-e2e190032cfb" name="Changes" comment="Arrumado classe transporte e método do cadastro">
+    <list default="true" id="27d4942c-c76d-444a-836b-e2e190032cfb" name="Changes" comment="Concerto Interface consultar e começo cadastrar transporte">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/IntefaceG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/IntefaceG.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Programa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Programa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Transporte.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/projeto/dell/Transporte.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/projeto/dell/ProgramaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/projeto/dell/ProgramaTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,6 +39,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -60,6 +66,7 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -72,9 +79,9 @@
       <recent name="C:\Users\tiago\IdeaProjects\ProjetoDell\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ProgramaTest.testeSemAcento">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.projeto.dell.Main" />
+  <component name="RunManager" selected="Gradle.ProgramaTest.testeCadastro">
+    <configuration name="IntefaceG" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.projeto.dell.IntefaceG" />
       <module name="ProjetoDell.main" />
       <extension name="coverage">
         <pattern>
@@ -109,7 +116,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ProgramaTest.testeCalQuantCaminhao" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ProgramaTest.testeCadastro" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -122,7 +129,30 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.projeto.dell.ProgramaTest.testeCalQuantCaminhao&quot;" />
+            <option value="&quot;org.projeto.dell.ProgramaTest.testeCadastro&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProgramaTest.testeCadastroDoisTrechos" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.projeto.dell.ProgramaTest.testeCadastroDoisTrechos&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -155,36 +185,13 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ProgramaTest.testeSemAcento" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.projeto.dell.ProgramaTest.testeSemAcento&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ProgramaTest.testeSemAcento" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Gradle.ProgramaTest.testeCadastro" />
         <item itemvalue="Gradle.ProgramaTest.testeDados" />
+        <item itemvalue="Gradle.ProgramaTest.testeCadastroDoisTrechos" />
         <item itemvalue="Gradle.ProgramaTest" />
-        <item itemvalue="Gradle.ProgramaTest.testeCalQuantCaminhao" />
+        <item itemvalue="Application.IntefaceG" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +205,9 @@
       <updated>1679532950098</updated>
       <workItem from="1679532951227" duration="906000" />
       <workItem from="1679533923896" duration="14204000" />
-      <workItem from="1679578856543" duration="19838000" />
+      <workItem from="1679578856543" duration="20279000" />
+      <workItem from="1679602565005" duration="27159000" />
+      <workItem from="1679672286035" duration="30360000" />
     </task>
     <task id="LOCAL-00001" summary="Busca index da cidade">
       <created>1679534820886</created>
@@ -235,7 +244,28 @@
       <option name="project" value="LOCAL" />
       <updated>1679595586192</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Calculo dados estatísticos">
+      <created>1679602251132</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679602251132</updated>
+    </task>
+    <task id="LOCAL-00007" summary="criado interface consultar">
+      <created>1679622683287</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1679622683287</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Concerto Interface consultar e começo cadastrar transporte">
+      <created>1679631856218</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1679631856218</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,6 +288,9 @@
     <MESSAGE value="Cria classe Transporte e Trecho" />
     <MESSAGE value="Cadastro transporte e calculo de caminhão" />
     <MESSAGE value="Arrumado classe transporte e método do cadastro" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arrumado classe transporte e método do cadastro" />
+    <MESSAGE value="Calculo dados estatísticos" />
+    <MESSAGE value="criado interface consultar" />
+    <MESSAGE value="Concerto Interface consultar e começo cadastrar transporte" />
+    <option name="LAST_COMMIT_MESSAGE" value="Concerto Interface consultar e começo cadastrar transporte" />
   </component>
 </project>

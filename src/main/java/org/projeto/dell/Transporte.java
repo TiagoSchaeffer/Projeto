@@ -12,7 +12,7 @@ public class Transporte {
     /**
      * Atributo com a lista das quantidades de cada item.
      */
-    public List<Integer> itens;
+    public List<List<String>> itens;
     /**
      * Atributo com o peso total dos itens.
      */
@@ -33,6 +33,7 @@ public class Transporte {
      * Atributo com o custo total.
      */
     public double custoTotal;
+    public List<Double> custoTotalPCaminhao;
 
 
     /**
@@ -43,13 +44,14 @@ public class Transporte {
      * @param quantCaminhao int quantidade de caminhão.
      * @param trechos       Lista de trechos.
      */
-    public Transporte(List<Integer> itens, double pesoTotal, List<Integer> quantCaminhao, List<Trecho> trechos, double distanciaTotal, double custoTotal) {
+    public Transporte(List<List<String>> itens, double pesoTotal, List<Integer> quantCaminhao, List<Trecho> trechos, double distanciaTotal, double custoTotal, List<Double> custoTotalPCaminhao) {
         this.itens = itens;
         this.pesoTotal = pesoTotal;
         this.quantCaminhao = quantCaminhao;
         this.trechos = trechos;
         this.distanciaTotal = distanciaTotal;
         this.custoTotal = custoTotal;
+        this.custoTotalPCaminhao = custoTotalPCaminhao;
     }
 
 
@@ -58,7 +60,7 @@ public class Transporte {
      *
      * @return Retorna a lista com as quantidades de cada item.
      */
-    public List<Integer> getItens() {
+    public List<List<String>> getItens() {
         return itens;
     }
 
@@ -67,7 +69,7 @@ public class Transporte {
      *
      * @param itens Lista com as quantidades de cada item.
      */
-    public void setItens(List<Integer> itens) {
+    public void setItens(List<List<String>> itens) {
         this.itens = itens;
     }
 
@@ -161,4 +163,11 @@ public class Transporte {
         this.custoTotal = custoTotal;
     }
 
+    public List<Double> getCustoTotalPCaminhao() {
+        return custoTotalPCaminhao;
+    }
+
+    public void setCustoTotalPCaminhao(List<Double> custoTotalPCaminhao) {
+        this.custoTotalPCaminhao = custoTotalPCaminhao;
+    }
 }
