@@ -39,9 +39,12 @@ public class Transporte {
     /**
      * Construtor da classe Transporte.
      *
-     * @param itens         Lista quantidade itens.
-     * @param pesoTotal     double peso total dos itens.
-     * @param trechos       Lista de trechos.
+     * @param itens               Lista quantidade itens.
+     * @param pesoTotal           double peso total dos itens.
+     * @param trechos             Lista de trechos.
+     * @param distanciaTotal      double Distancia do transporte.
+     * @param custoTotal          double Custo total para o transporte.
+     * @param custoTotalPCaminhao Lista do custo total por caminhão.
      */
     public Transporte(List<List<String>> itens, double pesoTotal, List<Trecho> trechos, double distanciaTotal, double custoTotal, List<Double> custoTotalPCaminhao) {
         this.itens = itens;
