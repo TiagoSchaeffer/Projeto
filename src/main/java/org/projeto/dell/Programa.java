@@ -33,15 +33,6 @@ public class Programa {
      */
     List<Transporte> cadastrosTransportes = new ArrayList<>();
 
-    public void printLista() {
-        List<List<String>> lista = criarMatrix();
-
-        for (List<String> strings : lista) {
-            for (String string : strings) System.out.print(string + " ");
-            System.out.println();
-        }
-    }
-
     /**
      * Método com a finalidade de criar a matrix com o csv, para manipular
      * os dados.
@@ -52,15 +43,11 @@ public class Programa {
         String path = "src\\main\\resources\\DNIT-Distancias.csv";
         List<List<String>> lista = new ArrayList<>();
         String line;
-
         try (BufferedReader dataxls = new BufferedReader(new FileReader(path))) {
-
             while ((line = dataxls.readLine()) != null) {
                 List<String> linha = new ArrayList<>();
                 String[] line_split = line.split(";");
-
                 Collections.addAll(linha, line_split);
-
                 lista.add(linha);
             }
             return lista;
@@ -84,7 +71,6 @@ public class Programa {
         return -1;
     }
 
-
     /**
      * Método para consultar o preço e a distância entre duas cidades, com base
      * no tipo de caminhão.
@@ -98,9 +84,7 @@ public class Programa {
         List<List<String>> lista = criarMatrix();
         int indexI = buscarIndexCidade(cidadeI);
         int indexF = buscarIndexCidade(cidadeF);
-
         int distancia = Integer.parseInt(lista.get(indexI + 1).get(indexF));
-
         double custo = 0.0;
         if (modalidade == 0)
             custo = CAMINHAO_PEQUENO * distancia;
@@ -108,13 +92,11 @@ public class Programa {
             custo = CAMINHAO_MEDIO * distancia;
         else if (modalidade == 2)
             custo = CAMINHAO_GRANDE * distancia;
-
         Double distanciaD = (Double) (double) distancia;
         Double custoD = custo;
         List<Double> list = new ArrayList<>();
         list.add(distanciaD);
         list.add(custoD);
-
         return list;
     }
 
@@ -229,8 +211,23 @@ public class Programa {
                 quantTipo++;
             totalItens += quantItem;
         }
-        double custoMTipo = t.custoTotal / quantTipo;
+        double custoMTipo = 0.0;
+        if (quantTipo > 0)
+            custoMTipo = t.custoTotal / quantTipo;
 
         return new ArrayList<>(Arrays.asList(custoMKm, custoMTipo, totalItens));
+    }
+
+    public List<Double> custoMedioPTipo(List<Double> custoTotal, List<Integer> quant) {
+        double mediaPequeno = 0.0;
+        double mediaMedio = 0.0;
+        double mediaGrande = 0.0;
+        if (quant.get(0) > 0)
+            mediaPequeno = custoTotal.get(0)/quant.get(0);
+        if (quant.get(1) > 0)
+            mediaMedio = custoTotal.get(1)/quant.get(1);
+        if (quant.get(2) > 0)
+            mediaGrande = custoTotal.get(2)/quant.get(2);
+        return new ArrayList<>(Arrays.asList(mediaPequeno, mediaMedio, mediaGrande));
     }
 }

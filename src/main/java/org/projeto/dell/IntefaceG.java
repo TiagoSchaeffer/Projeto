@@ -24,6 +24,7 @@ public class IntefaceG {
     private JTextField textDestino;
     private JTextField textCidade;
     private List<String> cidades;
+    private int indexCadastro;
 
 
     public static void main(String[] args) {
@@ -48,16 +49,6 @@ public class IntefaceG {
         painelE.setBackground(Color.GRAY.darker());
         painelE.setLayout(null);
         painelD.setLayout(null);
-
-
-        JButton buttonProximo = new JButton("Proximo");
-        buttonProximo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        buttonProximo.setBounds(10, 12, 200, 40);
 
 // -------------------------------------------Consultar Trechos x Modalidade Page---------------------------------------------//
         JLabel labelConsulta = new JLabel("Consultar Trechos x Modalidade");
@@ -103,14 +94,13 @@ public class IntefaceG {
                 if (!cidadeC.equalsIgnoreCase(cidadeD)) {
                     if (programa.buscarIndexCidade(cidadeC) >= 0 && programa.buscarIndexCidade(cidadeD) >= 0) {
                         List<Double> results = programa.consultarTrechosxModalidade(cidadeC, cidadeD, cbMod.getSelectedIndex());
-                        printTela("Distancia: " + results.get(0) + "\nCusto: " + results.get(1));
+                        printTela("Distancia: " + results.get(0) + "\nCusto: " + results.get(1), "Resultado");
                     } else
-                        printTela("ERRO: Uma ou mais cidades nao foram encontradas. ");
+                        printTela("ERRO: Uma ou mais cidades nao foram encontradas. ","ERRO");
                 } else
-                    printTela("ERRO: Cidades iguais, por favor mudar.");
+                    printTela("ERRO: Cidades iguais, por favor mudar.","ERRO");
             }
         });
-
 
         JButton buttonConsulta = new JButton("1- Consultar trechos");
         buttonConsulta.setBounds(10, 12, 200, 50);
@@ -177,11 +167,11 @@ public class IntefaceG {
                 String nomeCidade = textCidade.getText();
                 if (programa.buscarIndexCidade(nomeCidade) >= 0) {
                     if (cidades.size() > 0 && nomeCidade.equalsIgnoreCase(cidades.get(cidades.size() - 1)))
-                        printTela("ERRO: Cidade anterior e igual a que esta sendo adicionada.");
+                        printTela("ERRO: Cidade anterior e igual a que esta sendo adicionada.","ERRO");
                     else
                         cidades.add(nomeCidade);
                 } else
-                    printTela("ERRO: Cidade nao encontrada.");
+                    printTela("ERRO: Cidade nao encontrada.","ERRO");
                 textCidade.setText("");
             }
         });
@@ -206,11 +196,11 @@ public class IntefaceG {
                                     throw new Exception();
                             } catch (Exception o) {
                                 erro += 1;
-                                printTela("ERRO: Na coluna quantidade e necessario colocar um numero cardinal.");
+                                printTela("ERRO: Na coluna quantidade e necessario colocar um numero cardinal.","ERRO");
                             }
                         } else {
                             erro += 1;
-                            printTela("ERRO: Necessario colocar uma quantidade para o item, mesmo ser for 0.");
+                            printTela("ERRO: Necessario colocar uma quantidade para o item, mesmo ser for 0.","ERRO");
                         }
 
                         if (!pesoAtual.equals("")) {
@@ -220,10 +210,10 @@ public class IntefaceG {
                                     throw new Exception();
                             } catch (Exception o) {
                                 erro += 1;
-                                printTela("ERRO: Na coluna peso e necessario colocar um numero maior que 0.");
+                                printTela("ERRO: Na coluna peso e necessario colocar um numero maior que 0.","ERRO");
                             }
                         } else {
-                            printTela("ERRO: Necessario colocar um peso para o item, mesmo ser for 0.1.");
+                            printTela("ERRO: Necessario colocar um peso para o item, mesmo ser for 0.1.","ERRO");
                             erro += 1;
                         }
                         List<String> item = new ArrayList<>(Arrays.asList(nomeAtual, quantidadeAtual, pesoAtual));
@@ -234,9 +224,10 @@ public class IntefaceG {
                 if (erro == 0 && cidades.size() > 1) {
                     programa.cadastrarTransporte(cidades, listaItens);
                     cidades = new ArrayList<>();
-                    printTela("Cadastro realizado com sucesso.");
+                    List<Transporte> cadastros = programa.cadastrosTransportes;
+                    printTela("Cadastro realizado com sucesso: Distancia total do transporte e de " + cadastros.get(cadastros.size()-1).getDistanciaTotal(), "Sucesso");
                 } else
-                    printTela("ERRO: Cidades insuficiente, por favor adicionar mais uma.");
+                    printTela("ERRO: Cidades insuficiente, por favor adicionar mais uma.","ERRO");
             }
         });
 
@@ -263,87 +254,16 @@ public class IntefaceG {
             }
         });
 // --------------------------------------------Dados estatisticos--------------------------------------------------//
-        JLabel labelDados = new JLabel("Dados estatisticos");
-        labelDados.setFont(new Font("Times New Roman", Font.BOLD, 18));
-        labelDados.setBounds(115, 8, 300, 50);
-
-        JLabel labelTransporte = new JLabel("Transporte (1/" + programa.cadastrosTransportes.size() + ")");
-        labelTransporte.setFont(new Font("Times New Roman", Font.BOLD, 18));
-        labelTransporte.setBounds(120, 50, 300, 20);
-
-        JLabel labelCTotal = new JLabel("Custo total: ");
-        labelCTotal.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCTotal.setBounds(15, 80, 200, 20);
-
-        JLabel labelCMKm = new JLabel("Custo medio por Km: ");
-        labelCMKm.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMKm.setBounds(15, 100, 200, 20);
-
-        JLabel labelCMT = new JLabel("Custo medio p/ tipo: ");
-        labelCMT.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMT.setBounds(15, 120, 200, 20);
-
-        JLabel labelCMCP = new JLabel("Custo medio caminhao pequeno: ");
-        labelCMCP.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMCP.setBounds(15, 140, 200, 20);
-
-        JLabel labelCMCM = new JLabel("Custo medio caminhao medio: ");
-        labelCMCM.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMCM.setBounds(15, 160, 200, 20);
-
-        JLabel labelCMCG = new JLabel("Custo medio caminhao grande: ");
-        labelCMCG.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMCG.setBounds(15, 180, 200, 20);
-
-        JLabel labelTVeiculos = new JLabel("Numero total veiculos: ");
-        labelTVeiculos.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelTVeiculos.setBounds(15, 200, 200, 20);
-
-        JLabel labelTItens = new JLabel("Numero total de itens: ");
-        labelTItens.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelTItens.setBounds(15, 220,200, 20);
-
-        JLabel labelTrechos = new JLabel("Trechos");
-        labelTrechos.setFont(new Font("Times New Roman", Font.BOLD, 16));
-        labelTrechos.setBounds(150, 240, 200, 20);
-
-        Panel painelTrecho = new Panel();
-        JScrollPane painelScholl = new JScrollPane(painelTrecho);
-        painelScholl.setBounds(10, 270, 342, 70);
-        painelScholl.setVisible(true);
-
-        JButton anteriorT = new JButton("Anterior");
-        anteriorT.setBounds(10,30, 90, 40);
-
-        JButton proximoT = new JButton("Proximo");
-        proximoT.setBounds(265,30, 90, 40);
-
+        indexCadastro = 0;
         JButton buttonDados = new JButton("3- Dados estatisticos");
         buttonDados.setBounds(10, 142, 200, 50);
         buttonDados.setBackground(Color.GRAY);
         buttonDados.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Panel newPainel = new Panel();
-                newPainel.setLayout(null);
-                newPainel.setBounds(221, 1, 400, 400);
-                newPainel.add(labelDados);
-                newPainel.add(labelTransporte);
-                newPainel.add(labelCTotal);
-                newPainel.add(labelCMT);
-                newPainel.add(labelCMKm);
-                newPainel.add(labelCMCP);
-                newPainel.add(labelCMCM);
-                newPainel.add(labelCMCG);
-                newPainel.add(labelTVeiculos);
-                newPainel.add(labelTrechos);
-                newPainel.add(labelTItens);
-                newPainel.add(anteriorT);
-                newPainel.add(proximoT);
-                newPainel.add(painelScholl);
-
-                frame.getContentPane().remove(1);
-                frame.getContentPane().add(newPainel);
+                if (programa.cadastrosTransportes.size() > 0) {
+                    criarPanelDados(indexCadastro);
+                }
             }
         });
 
@@ -368,8 +288,8 @@ public class IntefaceG {
         frame.setVisible(true);
     }
 
-    public void printTela(String string) {
-        JOptionPane.showMessageDialog(null, string, "Transportes", JOptionPane.INFORMATION_MESSAGE, iconDisplay);
+    public void printTela(String string, String janela) {
+        JOptionPane.showMessageDialog(null, string,janela, JOptionPane.INFORMATION_MESSAGE, iconDisplay);
     }
 
     public static String removerAcento(String value) {
@@ -386,62 +306,76 @@ public class IntefaceG {
         labelDados.setFont(new Font("Times New Roman", Font.BOLD, 18));
         labelDados.setBounds(115, 8, 300, 50);
 
-        JLabel labelTransporte = new JLabel("Transporte (1/" + programa.cadastrosTransportes.size() + ")");
+        JLabel labelTransporte = new JLabel("Transporte (" +(indexCadastro+1)+"/" + programa.cadastrosTransportes.size() + ")");
         labelTransporte.setFont(new Font("Times New Roman", Font.BOLD, 18));
-        labelTransporte.setBounds(120, 50, 300, 20);
+        labelTransporte.setBounds(120, 60, 300, 20);
 
-        JLabel labelCTotal = new JLabel("Custo total: " + programa.cadastrosTransportes.get(index).getCustoTotal());
+        JLabel labelCTotal = new JLabel("Custo total:    " + programa.cadastrosTransportes.get(index).getCustoTotal());
         labelCTotal.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCTotal.setBounds(15, 80, 200, 20);
+        labelCTotal.setBounds(15, 90, 400, 20);
 
-        JLabel labelCMKm = new JLabel("Custo medio por Km: " + listaDados.get(0));
+        JLabel labelCMKm = new JLabel("Custo medio por Km:    " + listaDados.get(0));
         labelCMKm.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMKm.setBounds(15, 100, 200, 20);
+        labelCMKm.setBounds(15, 113, 400, 20);
 
-        JLabel labelCMT = new JLabel("Custo medio p/ tipo: " + listaDados.get(1));
+        JLabel labelCMT = new JLabel("Custo medio p/ tipo:    " + listaDados.get(1));
         labelCMT.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMT.setBounds(15, 120, 200, 20);
+        labelCMT.setBounds(15, 136, 400, 20);
 
-        double mediaPequeno = t.getCustoTotalPCaminhao().get(0)/t.getQuantCaminhao().get(0);
-        double mediaMedia = t.getCustoTotalPCaminhao().get(1)/t.getQuantCaminhao().get(1);
-        double mediaGrande = t.getCustoTotalPCaminhao().get(2)/t.getQuantCaminhao().get(2);
+        List<Double> listMTipo = programa.custoMedioPTipo(t.getCustoTotalPCaminhao(),t.getQuantCaminhao());
         List<Integer> listaCaminhao = t.getQuantCaminhao();
         int totalVeiculos = listaCaminhao.get(0) + listaCaminhao.get(1) + listaCaminhao.get(2);
-        JLabel labelCMCP = new JLabel("Custo medio caminhao pequeno: " + mediaPequeno);
+        JLabel labelCMCP = new JLabel("Custo medio caminhao pequeno:    " + listMTipo.get(0));
         labelCMCP.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMCP.setBounds(15, 140, 200, 20);
+        labelCMCP.setBounds(15, 159, 400, 20);
 
-        JLabel labelCMCM = new JLabel("Custo medio caminhao medio: " + mediaMedia);
+        JLabel labelCMCM = new JLabel("Custo medio caminhao medio:    " + listMTipo.get(1));
         labelCMCM.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMCM.setBounds(15, 160, 200, 20);
+        labelCMCM.setBounds(15, 182, 400, 20);
 
-        JLabel labelCMCG = new JLabel("Custo medio caminhao grande: " + mediaGrande);
+        JLabel labelCMCG = new JLabel("Custo medio caminhao grande:    " + listMTipo.get(2));
         labelCMCG.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelCMCG.setBounds(15, 180, 200, 20);
+        labelCMCG.setBounds(15, 205, 400, 20);
 
-        JLabel labelTVeiculos = new JLabel("Numero total veiculos: " + totalVeiculos);
+        JLabel labelTVeiculos = new JLabel("Numero total veiculos:    " + totalVeiculos);
         labelTVeiculos.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelTVeiculos.setBounds(15, 200, 200, 20);
+        labelTVeiculos.setBounds(15, 228, 400, 20);
 
-        JLabel labelTItens = new JLabel("Numero total de itens: " + listaDados.get(2));
+        JLabel labelTItens = new JLabel("Numero total de itens:    " + listaDados.get(2));
         labelTItens.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        labelTItens.setBounds(15, 220,200, 20);
+        labelTItens.setBounds(15, 251,400, 20);
 
-        JLabel labelTrechos = new JLabel("Trechos");
-        labelTrechos.setFont(new Font("Times New Roman", Font.BOLD, 16));
-        labelTrechos.setBounds(150, 240, 200, 20);
-
-        Panel painelTrecho = new Panel();
-        JScrollPane painelScholl = new JScrollPane(painelTrecho);
-        painelScholl.setBounds(10, 270, 342, 70);
-        painelScholl.setVisible(true);
-
+        JButton trechosButton = new JButton("Dados Trechos");
+        trechosButton.setBounds(40,280, 300, 40);
+        trechosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Trecho> trechos = t.getTrechos();
+                for (Trecho trecho : trechos) {
+                    printTela("O trecho de " + trecho.getCidadeI() + " ate " + trecho.getCidadeF() + " tem uma distancia de " + trecho.getDistancia() + ", e um custo de " + trecho.getCusto(), trecho.getCidadeI() + " - " + trecho.getCidadeF());
+                }
+            }
+        });
 
         JButton anteriorT = new JButton("Anterior");
-        anteriorT.setBounds(10,30, 90, 40);
+        anteriorT.setBounds(10,13, 90, 40);
+        anteriorT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indexCadastro -= 1;
+                criarPanelDados(indexCadastro);
+            }
+        });
 
         JButton proximoT = new JButton("Proximo");
-        proximoT.setBounds(265,30, 90, 40);
+        proximoT.setBounds(265,13, 90, 40);
+        proximoT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indexCadastro += 1;
+                criarPanelDados(indexCadastro);
+            }
+        });
 
         Panel newPainel = new Panel();
         newPainel.setLayout(null);
@@ -455,11 +389,12 @@ public class IntefaceG {
         newPainel.add(labelCMCM);
         newPainel.add(labelCMCG);
         newPainel.add(labelTVeiculos);
-        newPainel.add(labelTrechos);
         newPainel.add(labelTItens);
-        newPainel.add(anteriorT);
-        newPainel.add(proximoT);
-        newPainel.add(painelScholl);
+        if (indexCadastro > 0)
+            newPainel.add(anteriorT);
+        if (programa.cadastrosTransportes.size() > 1 && indexCadastro < programa.cadastrosTransportes.size()-1)
+            newPainel.add(proximoT);
+        newPainel.add(trechosButton);
 
         frame.getContentPane().remove(1);
         frame.getContentPane().add(newPainel);
