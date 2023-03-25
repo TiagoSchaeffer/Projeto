@@ -79,14 +79,12 @@ public class ProgramaTest {
         cadastroEsperado.add(new Transporte(
                 listItens,
                 8116,
-                new ArrayList<>(Arrays.asList(0,0,1)),
                 new ArrayList<>(List.of(new Trecho("BELEM", "BELO HORIZONTE", 2824, 77490.56))),
                 2824,
                 81077.04000000001,
                 new ArrayList<>(Arrays.asList(0.0,0.0,81077.04000000001))
         ));
         programa.cadastrarTransporte(new ArrayList<>(Arrays.asList("BELEM","BELO HORIZONTE")),listItens);
-        assertEquals(programa.cadastrosTransportes.get(0).getQuantCaminhao(),cadastroEsperado.get(0).getQuantCaminhao());
         assertEquals(programa.cadastrosTransportes.get(0).getItens(),cadastroEsperado.get(0).getItens());
         assertEquals(programa.cadastrosTransportes.get(0).getPesoTotal(),cadastroEsperado.get(0).getPesoTotal());
 
@@ -113,7 +111,6 @@ public class ProgramaTest {
         cadastroEsperado.add(new Transporte(
                 listItens,
                 8116,
-                new ArrayList<>(Arrays.asList(0,0,1)),
                 new ArrayList<>(Arrays.asList(
                         new Trecho("BELEM","BELO HORIZONTE",2824,77490.56),
                         new Trecho("BELO HORIZONTE", "MACEIO", 1854, 50873.76)
@@ -123,7 +120,6 @@ public class ProgramaTest {
                 new ArrayList<>(Arrays.asList(0.0,0.0,134305.38000000001))
         ));
         programa.cadastrarTransporte(new ArrayList<>(Arrays.asList("BELEM","BELO HORIZONTE", "MACEIO")),listItens);
-        assertEquals(programa.cadastrosTransportes.get(0).getQuantCaminhao(),cadastroEsperado.get(0).getQuantCaminhao());
         assertEquals(programa.cadastrosTransportes.get(0).getItens(),cadastroEsperado.get(0).getItens());
         assertEquals(programa.cadastrosTransportes.get(0).getPesoTotal(),cadastroEsperado.get(0).getPesoTotal());
 
@@ -157,4 +153,16 @@ public class ProgramaTest {
         assertEquals(dadosRetornados,dadosEsperados);
     }
 
+    /**
+     * Teste do método custoMedioPTipo.
+     */
+    @Test
+    void testeCustoMedioPtipo() {
+        List<Double> listaEsperada = new ArrayList<>(Arrays.asList(500.0,1000.0,600.0));
+        List<Double> listaRetornada = programa.custoMedioPTipo(
+                new ArrayList<>(Arrays.asList(1000.0,4000.0,3000.0)),
+                new ArrayList<>(Arrays.asList(2,4,5))
+                );
+        assertEquals(listaRetornada,listaEsperada);
+    }
 }

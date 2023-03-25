@@ -58,9 +58,10 @@ public class Programa {
     }
 
     /**
-     * Método para procurar a index apartir do nome da cidade
+     * Método para procurar a index apartir do nome da cidade.
      *
-     * @return Retorna um int com o index da cidade
+     * @param cidade qual cidade procurar.
+     * @return Retorna um int com o index da cidade.
      */
     public int buscarIndexCidade(String cidade) {
         List<List<String>> lista = criarMatrix();
@@ -78,7 +79,7 @@ public class Programa {
      * @param cidadeI    String cidade inicial
      * @param cidadeF    String cidade final
      * @param modalidade int com o tipo de caminhão, sendo 0 - pequeno, 1 - médio e 2 - grande.
-     * @return Retorna um double[2] com o valor [0] sendo a distância, e o [1] sendo o custo.
+     * @return Retorna uma lista de double com o valor [0] sendo a distância, e o [1] sendo o custo.
      */
     public List<Double> consultarTrechosxModalidade(String cidadeI, String cidadeF, int modalidade) {
         List<List<String>> lista = criarMatrix();
@@ -109,7 +110,6 @@ public class Programa {
             double pesoItem = Double.parseDouble(item.get(2));
             pesoTotal += quantItem * pesoItem;
         }
-        List<Integer> quantCaminhao = calQuantCaminhao(pesoTotal);
         List<Trecho> listaTrechos = new ArrayList<>();
         String cidadeAnterior = "";
         String cidadeAtual;
@@ -128,7 +128,8 @@ public class Programa {
             }
         }
         double custoTotal = custos.get(0) + custos.get(1) + custos.get(2);
-        cadastrosTransportes.add(new Transporte(itens, pesoTotal, quantCaminhao, listaTrechos, distanciaTotal, custoTotal, new ArrayList<>(Arrays.asList(custos.get(0), custos.get(1), custos.get(2)))));
+        List<Double> custoPCaminhao = new ArrayList<>(Arrays.asList(custos.get(0), custos.get(1), custos.get(2)));
+        cadastrosTransportes.add(new Transporte(itens, pesoTotal, listaTrechos, distanciaTotal, custoTotal, custoPCaminhao));
     }
 
     /**
@@ -154,7 +155,8 @@ public class Programa {
      * @param quantCaminhao Lista com as quantidades por caminhão.
      * @param cidadeI       Cidade inicial.
      * @param cidadeF       Cidade de destino.
-     * @return Retorna uma lista com o custo por tipo de caminhão.
+     * @return Retorna uma lista com o custo por tipo de caminhão, sendo [0] - caminhão pequeno,
+     * [1] - caminhão médio e [2] - caminhão grande.
      */
     public List<Double> custoTipoCaminhao(@NotNull List<Integer> quantCaminhao, String cidadeI, String cidadeF) {
         double custoP = 0;
@@ -174,7 +176,8 @@ public class Programa {
      * para gastar menos.
      *
      * @param pesoTotal peso total dos produtos.
-     * @return Retorna uma lista com as quantidades de cada caminhão.
+     * @return Retorna uma lista com as quantidades de cada caminhão, sendo [0] - caminhão pequeno,
+     * [1] - caminhão médio e [2] - caminhão grande.
      */
     public List<Integer> calQuantCaminhao(double pesoTotal) {
         int quantPequeno = 0;
@@ -199,7 +202,8 @@ public class Programa {
      * Método para calcular dados estatisticos e quantidade total de itens.
      *
      * @param t recebe um Transporte.
-     * @return Retorna uma lista com os dados estatísticos pedidos, sendo 0 - custo médio por km, 1- custo médio por tipo, 2- quantidade total de itens.
+     * @return Retorna uma lista com os dados estatísticos pedidos, sendo [0] - custo médio por km,
+     * [1] - custo médio por tipo, [2] - quantidade total de itens.
      */
     public List<Double> dadosEstatisticos(@NotNull Transporte t) {
         double custoMKm = t.custoTotal / t.distanciaTotal;
@@ -218,11 +222,12 @@ public class Programa {
     }
 
     /**
-     * Método para calcular o custo médio por tipo de item.
+     * Método para calcular o custo médio de cada tipo de caminhão.
      *
      * @param custoTotal Custo total do trajeto.
-     * @param quant      Quantidade por tipo de caminhõa;
-     * @return Retorna uma lista com os dados estatísticos pedidos, sendo 0 - custo médio por km, 1- custo médio por tipo, 2- quantidade total de itens.
+     * @param quant      Quantidade por tipo de caminhão;
+     * @return Retorna uma lista com os custos médios de cada tipo de caminhões, sendo [0] - caminhão pequeno,
+     * [1] - caminhão médio e [2] - caminhão grande.
      */
     public List<Double> custoMedioPTipo(@NotNull List<Double> custoTotal, @NotNull List<Integer> quant) {
         double mediaPequeno = 0.0;

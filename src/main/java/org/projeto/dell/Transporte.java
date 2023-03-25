@@ -17,10 +17,7 @@ public class Transporte {
      * Atributo com o peso total dos itens.
      */
     public double pesoTotal;
-    /**
-     * Atributo com a lista quantidade de caminhões por tipo.
-     */
-    public List<Integer> quantCaminhao;
+
     /**
      * Atributo com a lista de trechos do transporte.
      */
@@ -33,6 +30,9 @@ public class Transporte {
      * Atributo com o custo total.
      */
     public double custoTotal;
+    /**
+     * Atributo custo total por tipo caminhão.
+     */
     public List<Double> custoTotalPCaminhao;
 
 
@@ -41,19 +41,16 @@ public class Transporte {
      *
      * @param itens         Lista quantidade itens.
      * @param pesoTotal     double peso total dos itens.
-     * @param quantCaminhao int quantidade de caminhão.
      * @param trechos       Lista de trechos.
      */
-    public Transporte(List<List<String>> itens, double pesoTotal, List<Integer> quantCaminhao, List<Trecho> trechos, double distanciaTotal, double custoTotal, List<Double> custoTotalPCaminhao) {
+    public Transporte(List<List<String>> itens, double pesoTotal, List<Trecho> trechos, double distanciaTotal, double custoTotal, List<Double> custoTotalPCaminhao) {
         this.itens = itens;
         this.pesoTotal = pesoTotal;
-        this.quantCaminhao = quantCaminhao;
         this.trechos = trechos;
         this.distanciaTotal = distanciaTotal;
         this.custoTotal = custoTotal;
         this.custoTotalPCaminhao = custoTotalPCaminhao;
     }
-
 
     /**
      * get da lista de itens.
@@ -62,33 +59,6 @@ public class Transporte {
      */
     public List<List<String>> getItens() {
         return itens;
-    }
-
-    /**
-     * set da lista de itens.
-     *
-     * @param itens Lista com as quantidades de cada item.
-     */
-    public void setItens(List<List<String>> itens) {
-        this.itens = itens;
-    }
-
-    /**
-     * get da quantidade de caminhão.
-     *
-     * @return Retorna List<Integer> da quantidade de caminhão.
-     */
-    public List<Integer> getQuantCaminhao() {
-        return quantCaminhao;
-    }
-
-    /**
-     * set da lista de caminhões.
-     *
-     * @param quantCaminhao quantidade de caminhão por tipo.
-     */
-    public void setQuantCaminhao(List<Integer> quantCaminhao) {
-        this.quantCaminhao = quantCaminhao;
     }
 
     /**
@@ -101,30 +71,12 @@ public class Transporte {
     }
 
     /**
-     * set do peso total dos itens.
-     *
-     * @param pesoTotal double do peso total dos itens.
-     */
-    public void setPesoTotal(double pesoTotal) {
-        this.pesoTotal = pesoTotal;
-    }
-
-    /**
      * get da lista de trechos.
      *
      * @return Retorna List<Trecho> com todos os trechos do transporte.
      */
     public List<Trecho> getTrechos() {
         return trechos;
-    }
-
-    /**
-     * set da lista de trechos.
-     *
-     * @param trechos Lista com todos os trechos do transporte.
-     */
-    public void setTrechos(List<Trecho> trechos) {
-        this.trechos = trechos;
     }
 
     /**
@@ -137,15 +89,6 @@ public class Transporte {
     }
 
     /**
-     * set da distância total do transporte.
-     *
-     * @param distanciaTotal double com a distânia total realizada pelo transporte.
-     */
-    public void setDistanciaTotal(double distanciaTotal) {
-        this.distanciaTotal = distanciaTotal;
-    }
-
-    /**
      * get do custo total do transporte.
      *
      * @return Retorna o custo total do transporte.
@@ -155,19 +98,11 @@ public class Transporte {
     }
 
     /**
-     * set do custo total do transporte.
+     * get do custo total por caminhão.
      *
-     * @param custoTotal double com o custo total do transporte.
+     * @return Retorna o custo total por caminhão.
      */
-    public void setCustoTotal(double custoTotal) {
-        this.custoTotal = custoTotal;
-    }
-
     public List<Double> getCustoTotalPCaminhao() {
         return custoTotalPCaminhao;
-    }
-
-    public void setCustoTotalPCaminhao(List<Double> custoTotalPCaminhao) {
-        this.custoTotalPCaminhao = custoTotalPCaminhao;
     }
 }

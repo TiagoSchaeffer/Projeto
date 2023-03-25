@@ -50,29 +50,12 @@ public class Trecho {
     }
 
     /**
-     * set da cidade inicial.
-     *
-     * @param cidadeI Cidade inicial.
-     */
-    public void setCidadeI(String cidadeI) {
-        this.cidadeI = cidadeI;
-    }
-
-    /**
      * get da cidade final.
      *
      * @return Retorna string cidade final.
      */
     public String getCidadeF() {
         return cidadeF;
-    }
-    /**
-     * set da cidade final.
-     *
-     * @param cidadeF Cidade final.
-     */
-    public void setCidadeF(String cidadeF) {
-        this.cidadeF = cidadeF;
     }
 
     /**
@@ -85,29 +68,11 @@ public class Trecho {
     }
 
     /**
-     * set da distancia entre as cidades.
-     *
-     * @param distancia distancia entre as cidades.
-     */
-    public void setDistancia(double distancia) {
-        this.distancia = distancia;
-    }
-
-    /**
      * get do custo de transporte.
      *
      * @return Retorna int dos custo de transporte.
      */
     public double getCusto() {
         return custo;
-    }
-
-    /**
-     * set do custo de transporte.
-     *
-     * @param custo custo de transporte.
-     */
-    public void setCusto(double custo) {
-        this.custo = custo;
     }
 }

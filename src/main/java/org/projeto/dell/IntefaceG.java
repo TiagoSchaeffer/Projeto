@@ -22,18 +22,29 @@ public class IntefaceG {
     private JTextField textDestino;
     private JTextField textCidade;
     private List<String> cidades;
+
+    /**
+     * Atributo com o index atual nos dados estatisticos.
+     */
     private int indexCadastro;
 
-
+    /**
+     * Método main que instância a interface.
+     */
     public static void main(String[] args) {
         IntefaceG tela = new IntefaceG();
     }
 
+    /**
+     * Construtor da classe interface.
+     */
     public IntefaceG() {
         createFrame();
     }
 
-
+    /**
+     * Método em que cria o frame, e todos os elementos dos paineis, e suas funções.
+     */
     public void createFrame() {
         frame = new JFrame("Projeto Dell - Tiago Medeiros");
         frame.setSize(600, 400);
@@ -90,7 +101,7 @@ public class IntefaceG {
             if (!cidadeC.equalsIgnoreCase(cidadeD)) {
                 if (programa.buscarIndexCidade(cidadeC) >= 0 && programa.buscarIndexCidade(cidadeD) >= 0) {
                     List<Double> results = programa.consultarTrechosxModalidade(cidadeC, cidadeD, cbMod.getSelectedIndex());
-                    printTela("Distancia: " + results.get(0) + "\nCusto: " + results.get(1), "Resultado");
+                    printTela("Distancia: " + String.format("%.2f", results.get(0)) + "km, Custo: R$" + String.format("%.2f", results.get(1)), "Resultado");
                 } else
                     printTela("ERRO: Uma ou mais cidades nao foram encontradas. ","ERRO");
             } else
@@ -170,6 +181,8 @@ public class IntefaceG {
         confirmCadastro.setBounds(108, 300, 150, 30);
         confirmCadastro.addActionListener(e -> {
             int erro = 0;
+            int quantZero = 0;
+            int colunasPreenchidas = 0;
             List<List<String>> listaItens = new ArrayList<>();
             for (int i = 0; i < tabelaItens.getRowCount(); i++) {
                 String nomeAtual = removerAcento((String) tabelaItens.getValueAt(i, 0));
@@ -179,8 +192,11 @@ public class IntefaceG {
                     if (!quantidadeAtual.equals("")) {
                         try {
                             int numero = Integer.parseInt(quantidadeAtual);
-                            if (numero < 0)
+                            if (numero < 0) {
                                 throw new Exception();
+                            } else if (numero == 0) {
+                                quantZero += 1;
+                            }
                         } catch (Exception o) {
                             erro += 1;
                             printTela("ERRO: Na coluna quantidade e necessario colocar um numero cardinal.","ERRO");
@@ -205,16 +221,42 @@ public class IntefaceG {
                     }
                     List<String> item = new ArrayList<>(Arrays.asList(nomeAtual, quantidadeAtual, pesoAtual));
                     listaItens.add(item);
+                    colunasPreenchidas += 1;
                 }
             }
-
+            if (colunasPreenchidas == quantZero) {
+                erro += 1;
+                printTela("ERRO: Nenhuma quantidade de itens adicionada, porfavor adicionar pelo menos um item.", "ERRO");
+            }
             if (erro == 0 && cidades.size() > 1) {
                 programa.cadastrarTransporte(cidades, listaItens);
                 cidades = new ArrayList<>();
                 List<Transporte> cadastros = programa.cadastrosTransportes;
-                printTela("Cadastro realizado com sucesso: Distancia total do transporte e de " + cadastros.get(cadastros.size()-1).getDistanciaTotal(), "Sucesso");
-            } else
-                printTela("ERRO: Cidades insuficiente, por favor adicionar mais uma.","ERRO");
+                Transporte cadastrosAtual = cadastros.get(cadastros.size()-1);
+                String mensagemCadastro = "Cadastro realizado com sucesso: Distancia total do transporte de " + (int) cadastrosAtual.getDistanciaTotal() + "km, sera utilizado ";
+                List<Integer> quantidadeCaminhao = programa.calQuantCaminhao(cadastrosAtual.getPesoTotal());
+                if (quantidadeCaminhao.get(0) > 1)
+                    mensagemCadastro += quantidadeCaminhao.get(0) + " caminhoes pequenos, ";
+                else if (quantidadeCaminhao.get(0) > 0)
+                    mensagemCadastro += quantidadeCaminhao.get(0) + " caminhao pequeno, ";
+
+                if (quantidadeCaminhao.get(1) > 1)
+                    mensagemCadastro += quantidadeCaminhao.get(1) + " caminhoes medios, ";
+                else if (quantidadeCaminhao.get(1) > 0)
+                    mensagemCadastro += quantidadeCaminhao.get(1) + " caminhao medio, ";
+
+                if (quantidadeCaminhao.get(2) > 1)
+                    mensagemCadastro += quantidadeCaminhao.get(2) + " caminhoes grandes, ";
+                else if (quantidadeCaminhao.get(2) > 0)
+                    mensagemCadastro += quantidadeCaminhao.get(2) + " caminhao grande, ";
+
+                double custoMUnitario = cadastrosAtual.getCustoTotal()/programa.dadosEstatisticos(cadastrosAtual).get(2);
+                mensagemCadastro += "com um custo unitario medio de R$" + String.format("%.2f", custoMUnitario) + ".";
+                printTela(mensagemCadastro, "Sucesso");
+            } else if (erro == 0) {
+                printTela("ERRO: Cidades insuficiente, por favor adicionar mais uma.", "ERRO");
+            }
+
         });
 
         JButton buttonCadastro = new JButton("2- Cadastrar Transporte");
@@ -244,8 +286,11 @@ public class IntefaceG {
         buttonDados.addActionListener(e -> {
             if (programa.cadastrosTransportes.size() > 0) {
                 criarPanelDados(indexCadastro);
+            } else {
+                printTela("ERRO: Nenhum cadastro realizado no momento, porfavor cadastrar antes de acessar os dados.", "ERRO");
             }
         });
+// ----------------------------------------------------------------------------------------------------------------//
 
         JButton buttonFechar = new JButton("4- Fechar");
         buttonFechar.setBackground(Color.GRAY);
@@ -263,16 +308,32 @@ public class IntefaceG {
         frame.setVisible(true);
     }
 
+    /**
+     * Método que cria uma optionPane para mostrar informações.
+     *
+     * @param string Mensagem que será mostrada.
+     * @param janela Nome da optionPane que será criada.
+     */
     public void printTela(String string, String janela) {
         JOptionPane.showMessageDialog(null, string,janela, JOptionPane.INFORMATION_MESSAGE, iconDisplay);
     }
 
-    public static String removerAcento(String value) {
-        String normalizer = Normalizer.normalize(value, Normalizer.Form.NFD);
+    /**
+     * Método para remover acento de String.
+     *
+     * @param string String para remover acento.
+     */
+    public static String removerAcento(String string) {
+        String normalizer = Normalizer.normalize(string, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(normalizer).replaceAll("");
     }
 
+    /**
+     * Método para criar o painel dos dados estatísticos.
+     *
+     * @param index Index do transporte que será mostrado no painel.
+     */
     public void criarPanelDados(int index) {
         Transporte t = programa.cadastrosTransportes.get(index);
         List<Double> listaDados = programa.dadosEstatisticos(t);
@@ -285,30 +346,30 @@ public class IntefaceG {
         labelTransporte.setFont(new Font("Times New Roman", Font.BOLD, 18));
         labelTransporte.setBounds(120, 60, 300, 20);
 
-        JLabel labelCTotal = new JLabel("Custo total:    " + programa.cadastrosTransportes.get(index).getCustoTotal());
+        JLabel labelCTotal = new JLabel("Custo total:    R$" + String.format("%.2f", programa.cadastrosTransportes.get(index).getCustoTotal()));
         labelCTotal.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelCTotal.setBounds(15, 90, 400, 20);
 
-        JLabel labelCMKm = new JLabel("Custo medio por Km:    " + listaDados.get(0));
+        JLabel labelCMKm = new JLabel("Custo medio por Km:    R$" + String.format("%.2f", listaDados.get(0)));
         labelCMKm.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelCMKm.setBounds(15, 113, 400, 20);
 
-        JLabel labelCMT = new JLabel("Custo medio p/ tipo:    " + listaDados.get(1));
+        JLabel labelCMT = new JLabel("Custo medio p/ tipo:    R$" + String.format("%.2f", listaDados.get(1)));
         labelCMT.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelCMT.setBounds(15, 136, 400, 20);
 
-        List<Double> listMTipo = programa.custoMedioPTipo(t.getCustoTotalPCaminhao(),t.getQuantCaminhao());
-        List<Integer> listaCaminhao = t.getQuantCaminhao();
+        List<Integer> listaCaminhao = programa.calQuantCaminhao(t.getPesoTotal());
+        List<Double> listMTipo = programa.custoMedioPTipo(t.getCustoTotalPCaminhao(), listaCaminhao);
         int totalVeiculos = listaCaminhao.get(0) + listaCaminhao.get(1) + listaCaminhao.get(2);
-        JLabel labelCMCP = new JLabel("Custo medio caminhao pequeno:    " + listMTipo.get(0));
+        JLabel labelCMCP = new JLabel("Custo medio caminhao pequeno:    R$" + String.format("%.2f", listMTipo.get(0)));
         labelCMCP.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelCMCP.setBounds(15, 159, 400, 20);
 
-        JLabel labelCMCM = new JLabel("Custo medio caminhao medio:    " + listMTipo.get(1));
+        JLabel labelCMCM = new JLabel("Custo medio caminhao medio:    R$" + String.format("%.2f", listMTipo.get(1)));
         labelCMCM.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelCMCM.setBounds(15, 182, 400, 20);
 
-        JLabel labelCMCG = new JLabel("Custo medio caminhao grande:    " + listMTipo.get(2));
+        JLabel labelCMCG = new JLabel("Custo medio caminhao grande:    R$" + String.format("%.2f", listMTipo.get(2)));
         labelCMCG.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelCMCG.setBounds(15, 205, 400, 20);
 
@@ -316,7 +377,7 @@ public class IntefaceG {
         labelTVeiculos.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelTVeiculos.setBounds(15, 228, 400, 20);
 
-        JLabel labelTItens = new JLabel("Numero total de itens:    " + listaDados.get(2));
+        JLabel labelTItens = new JLabel("Numero total de itens:    " + String.format("%.2f", listaDados.get(2)));
         labelTItens.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         labelTItens.setBounds(15, 251,400, 20);
 
@@ -325,7 +386,7 @@ public class IntefaceG {
         trechosButton.addActionListener(e -> {
             List<Trecho> trechos = t.getTrechos();
             for (Trecho trecho : trechos) {
-                printTela("O trecho de " + trecho.getCidadeI() + " ate " + trecho.getCidadeF() + " tem uma distancia de " + trecho.getDistancia() + ", e um custo de " + trecho.getCusto(), trecho.getCidadeI() + " - " + trecho.getCidadeF());
+                printTela("O trecho de " + trecho.getCidadeI() + " ate " + trecho.getCidadeF() + " tem uma distancia de " + (int) trecho.getDistancia() + "km, e um custo de R$" + String.format("%.2f", trecho.getCusto()), trecho.getCidadeI() + " - " + trecho.getCidadeF());
             }
         });
 
