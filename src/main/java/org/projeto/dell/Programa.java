@@ -34,12 +34,12 @@ public class Programa {
     List<Transporte> cadastrosTransportes = new ArrayList<>();
 
     /**
-     * Método com a finalidade de criar a matrix com o csv, para manipular
+     * Método com a finalidade de criar a matriz com o csv, para manipular
      * os dados.
      *
-     * @return Retorna uma matrix de String, feita com List Collection.
+     * @return Retorna uma matriz de String, feita com List Collection.
      */
-    public List<List<String>> criarMatrix() {
+    public List<List<String>> criarMatriz() {
         String caminho = "src\\main\\resources\\DNIT-Distancias.csv";
         List<List<String>> lista = new ArrayList<>();
         try (BufferedReader dataxls = new BufferedReader(new FileReader(caminho))) {
@@ -64,7 +64,7 @@ public class Programa {
      * @return Retorna um int com o index da cidade.
      */
     public int buscarIndexCidade(String cidade) {
-        List<List<String>> lista = criarMatrix();
+        List<List<String>> lista = criarMatriz();
         for (int i = 0; i < lista.get(0).size(); i++) {
             if (lista.get(0).get(i).equalsIgnoreCase(cidade))
                 return i;
@@ -82,7 +82,7 @@ public class Programa {
      * @return Retorna uma lista de double com o valor [0] sendo a distância, e o [1] sendo o custo.
      */
     public List<Double> consultarTrechosxModalidade(String cidadeI, String cidadeF, int modalidade) {
-        List<List<String>> lista = criarMatrix();
+        List<List<String>> lista = criarMatriz();
         int indexI = buscarIndexCidade(cidadeI);
         int indexF = buscarIndexCidade(cidadeF);
         double distancia = Integer.parseInt(lista.get(indexI + 1).get(indexF));
